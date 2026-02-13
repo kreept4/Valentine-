@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Be My Valentine 💘</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Comic Sans MS', 'Poppins', cursive;
+      background: linear-gradient(135deg, #ff4d4d, #ffd966);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 24px;
+      text-align: center;
+      max-width: 90%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      transition: all 0.4s ease;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      color: #e60026;
+      transition: all 0.4s ease;
+    }
+
+    p {
+      color: #444;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      position: relative;
+      margin-top: 30px;
+      height: 80px;
+    }
+
+    button {
+      padding: 14px 30px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: absolute;
+    }
+
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+      left: 50%;
+      transform: translateX(-120%);
+    }
+
+    #noBtn {
+      background: #ccc;
+      color: #333;
+      left: 50%;
+      transform: translateX(20%);
+    }
+
+    button:hover {
+      transform: scale(1.08);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* floating hearts (soft, slow, not flashy) */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      opacity: 0.6;
+      animation: floatUp 8s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card" id="card">
+    <h1 id="question">Hey Dimi, will you be my Valentine? 💘</h1>
+    <p id="subtext">Be honest… but choose wisely 😌</p>
+
+    <div class="buttons">
+      <button id="yesBtn">Yes 💕</button>
+      <button id="noBtn">No 🙃</button>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const question = document.getElementById("question");
+    const subtext = document.getElementById("subtext");
+    const card = document.getElementById("card");
+
+    let noCount = 0;
+
+    const noMessages = [
+      "Hmm… are you sureeee? 🥺",
+      "Okay but like… think about us though 😌💖",
+      "Dimi please, I’m actually very cute 😭",
+      "Alright now you’re just playing hard to get 😏",
+      "No is getting tired… Yes is looking really good rn 👀"
+    ];
+
+    noBtn.addEventListener("click", () => {
+      noCount++;
+
+      // 1️⃣ Persuasive text gets bigger
+      question.style.fontSize = `${2.2 + noCount * 0.25}rem`;
+      question.textContent = noMessages[Math.min(noCount - 1, noMessages.length - 1)];
+
+      // 2️⃣ No button moves playfully
+      const randomX = Math.random() * 200 - 100;
+      const randomY = Math.random() * 60 - 30;
+      noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+      // 3️⃣ Yes button grows and becomes more tempting
+      yesBtn.style.fontSize = `${1.1 + noCount * 0.2}rem`;
+      yesBtn.style.padding = `${14 + noCount * 2}px ${30 + noCount * 4}px`;
+
+      // Eventually remove No option
+      if (noCount >= 5) {
+        noBtn.classList.add("hidden");
+        subtext.textContent = "Okay… I’ll make it easy for you 😌💕";
+      }
+    });
+
+    yesBtn.addEventListener("click", () => {
+      card.innerHTML = `
+        <h1 style="font-size: 2.5rem; color:#ff4d6d;">
+          I love you sm baby 💕
+        </h1>
+        <p>You just made me the happiest person ever 🥰</p>
+      `;
+    });
+
+    // soft floating hearts
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 6 + Math.random() * 4 + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 10000);
+    }, 1200);
+  </script>
+</body>
+</html>
